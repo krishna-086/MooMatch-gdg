@@ -17,9 +17,7 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">About Us</h2>
           <div className="w-24 h-1 bg-white mb-8"></div>
           <p className="text-lg mb-8">
-            We provide a comprehensive platform for farmers and agricultural experts to manage their herds and farms efficiently. 
-            Our responsive web portal offers multiple language support and voice-guided assistance, ensuring accessibility for all. 
-            With AI-based breed identification and breeding recommendations, we help improve farm productivity and breed conservation.
+          We are dedicated to helping farmers protect and improve Indian cow breeds through easy-to-use tools. Our platform allows farmers to identify cow breeds by uploading pictures, providing valuable insights into herd health and breed composition. We offer personalized breeding recommendations to help farmers improve their herd's health and milk production. Our goal is to support farmers in improving their farms while promoting cow breed conservation.
           </p>
         </div>
       </div>

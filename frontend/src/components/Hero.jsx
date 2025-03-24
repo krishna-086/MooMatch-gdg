@@ -20,7 +20,7 @@ const Hero = () => {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          Effortless Farm Management
+          Smart Solutions for Gaupalaks
         </h1>
         <div 
           className="w-24 h-1 bg-white mx-auto mb-8"
@@ -32,7 +32,7 @@ const Hero = () => {
           data-aos="fade-up"
           data-aos-delay="300"
         >
-          Empowering Farmers with Advanced AI Tools
+          Empowering Farmers with AI for Sustainable Breed Improvement
         </h2>
       </div>
     </section>
