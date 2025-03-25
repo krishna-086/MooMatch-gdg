@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
   const scrollToSection = (sectionId) => {
     setIsMenuOpen(false);
     const element = document.getElementById(sectionId);
     if (element) {
       const hasAnimated = element.classList.contains('aos-animate');
-      const yOffset = hasAnimated ? 0 : -100;// Adjust this value based on your header height
+      const yOffset = hasAnimated ? 0 : -100; // Adjust this value based on your header height
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
       window.scrollTo({
@@ -32,33 +35,39 @@ const Navbar = () => {
           <div className="flex space-x-8">
             <button 
               onClick={() => scrollToSection('home')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
             >
               Home
             </button>
             <button 
               onClick={() => scrollToSection('about')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
             >
               About
             </button>
             <button 
               onClick={() => scrollToSection('services')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
             >
               Services
             </button>
             <button 
               onClick={() => scrollToSection('testimonials')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
             >
               Testimonials
             </button>
             <button 
               onClick={() => scrollToSection('contact')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
             >
               Contact
+            </button>
+            <button 
+              onClick={() => navigate('/eduContent')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              EduContent
             </button>
           </div>
         </div>
@@ -89,33 +98,39 @@ const Navbar = () => {
           <div className="flex flex-col space-y-4">
             <button 
               onClick={() => scrollToSection('home')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200 text-left"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
             >
               Home
             </button>
             <button 
               onClick={() => scrollToSection('about')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200 text-left"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
             >
               About
             </button>
             <button 
               onClick={() => scrollToSection('services')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200 text-left"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
             >
               Services
             </button>
             <button 
               onClick={() => scrollToSection('testimonials')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200 text-left"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
             >
               Testimonials
             </button>
             <button 
               onClick={() => scrollToSection('contact')} 
-              className="text-[#662929] font-medium hover:text-[#662929] hover:underline hover:scale-110 transition-transform duration-200 text-left"
+              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
             >
               Contact
+            </button>
+            <button 
+              onClick={() => navigate('/EduContent')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              EduContent
             </button>
           </div>
         </div>

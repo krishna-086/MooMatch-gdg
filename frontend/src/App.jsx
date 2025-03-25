@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Navbar from './components/Navbar';
@@ -10,8 +11,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import BottomNavbar from './components/BottomNavbar';
-
-
+import EduContent from './EduContent';
 
 function App() {
   useEffect(() => {
@@ -22,23 +22,33 @@ function App() {
       mirror: false
     });
   }, []);
-  
 
   return (
-    <div className="font-sans">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer />
-      <BottomNavbar />
-      <BackToTop />
-    </div>
-  )
+    <Router>
+      <div className="font-sans">
+        <Routes>
+          {/* Home Page with Navbar */}
+          <Route path="/" element={
+            <>
+              <Navbar />
+              <Hero />
+              <About />
+              <Services />
+              <Testimonials />
+              <Contact />
+            </>
+          } />
+
+          {/* EduContent Page */}
+          <Route path="/EduContent" element={<EduContent />} />
+        </Routes>
+        
+        
+        <BottomNavbar />
+        <BackToTop />
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
