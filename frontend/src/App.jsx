@@ -15,6 +15,9 @@ import EduContent from './EduContent';
 import CattleDashboard from './CattleDashboard'; 
 
 
+import ImageModel from './components/ImageModel';
+import Chatbot from './components/Chatbot';
+
 function App() {
   useEffect(() => {
     AOS.init({
@@ -36,8 +39,10 @@ function App() {
               <Hero />
               <About />
               <Services />
+              <ImageModel />
               <Testimonials />
               <Contact />
+              <Footer />
             </>
           } />
 
@@ -52,6 +57,7 @@ function App() {
         
         <BottomNavbar />
         <BackToTop />
+        <Chatbot />
       </div>
     </Router>
   );
