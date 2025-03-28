@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import BottomNavbar from './components/BottomNavbar';
 import EduContent from './EduContent';
+import CattleDashboard from './CattleDashboard'; 
+
 
 function App() {
   useEffect(() => {
@@ -27,7 +29,7 @@ function App() {
     <Router>
       <div className="font-sans">
         <Routes>
-          {/* Home Page with Navbar */}
+          {/* Home Page */}
           <Route path="/" element={
             <>
               <Navbar />
@@ -41,8 +43,12 @@ function App() {
 
           {/* EduContent Page */}
           <Route path="/EduContent" element={<EduContent />} />
+
+          {/* Cattle Management Dashboard Page */}
+          <Route path="/dashboard" element={<CattleDashboard />} />
+
+          
         </Routes>
-        
         
         <BottomNavbar />
         <BackToTop />
