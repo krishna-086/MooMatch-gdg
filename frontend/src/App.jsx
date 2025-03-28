@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import BottomNavbar from './components/BottomNavbar';
 import EduContent from './EduContent';
+import ImageModel from './components/ImageModel';
+import Chatbot from './components/Chatbot';
 
 function App() {
   useEffect(() => {
@@ -34,8 +36,10 @@ function App() {
               <Hero />
               <About />
               <Services />
+              <ImageModel />
               <Testimonials />
               <Contact />
+              <Footer />
             </>
           } />
 
@@ -46,6 +50,7 @@ function App() {
         
         <BottomNavbar />
         <BackToTop />
+        <Chatbot />
       </div>
     </Router>
   );

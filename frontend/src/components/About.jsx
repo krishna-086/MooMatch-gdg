@@ -8,7 +8,7 @@ const About = () => {
         <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
           <div 
             className="h-64 md:h-96 w-full bg-cover bg-center rounded-lg shadow-xl"
-            style={{ backgroundImage: "url('https://images.cdn-files-a.com/ready_uploads/media/72814/800_5ce53a424f3a3.jpg')" }}
+            style={{ backgroundImage: "url('/aboutcow.jpg')" }}
           ></div>
         </div>
         
