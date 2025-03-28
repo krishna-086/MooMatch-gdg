@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Edit, Trash2, X } from "lucide-react";
-import { motion } from "framer-motion";
-import { db } from "./firebase"; // Update path to your firebase config
-import {
-  collection,
-  addDoc,
-  onSnapshot,
-  deleteDoc,
-  doc,
-  updateDoc,
-  query,
-} from "firebase/firestore";
 import WeatherWidget from "./components/WeatherWidget";
-
+import { motion } from "framer-motion";
 
 const CattleDashboard = () => {
-  const [cattle, setCattle] = useState([]);
+  const [cattle, setCattle] = useState(
+    JSON.parse(localStorage.getItem("cattle")) || [
+      {
+        id: 1,
+        name: "Bella",
+        breed: "Holstein",
+        age: 5,
+        milk: 20,
+        weight: 500,
+      },
+    ]
+  );
   const [newCow, setNewCow] = useState({
     name: "",
     breed: "",
@@ -28,39 +27,26 @@ const CattleDashboard = () => {
   const [editData, setEditData] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
-
-  // Firestore real-time data sync
   useEffect(() => {
-    const q = query(collection(db, "cattle"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const cattleData = [];
-      querySnapshot.forEach((doc) => {
-        cattleData.push({ id: doc.id, ...doc.data() });
-      });
-      setCattle(cattleData);
-    });
-    return () => unsubscribe();
-  }, []);
+    localStorage.setItem("cattle", JSON.stringify(cattle));
+  }, [cattle]);
 
   const getHealthRecommendation = (cow) => {
-    // Convert Firestore data to numbers safely
-    const milk = Number(cow.milk);
-    const weight = Number(cow.weight);
-    const age = Number(cow.age);
+    const { milk, weight, age } = cow;
 
-    // Validate numerical values
-    if (isNaN(milk) || isNaN(weight) || isNaN(age)) {
-      return "Invalid data. Please check milk, weight, and age values.";
+    // Basic validation
+    if (milk == null || weight == null || age == null) {
+      return "Incomplete data. Please provide milk yield, weight, and age.";
     }
 
     // Young cows (under 2 years)
     if (age < 2) {
       if (weight < 250) {
         return "Young and underweight: Ensure calf starter, green fodder, and regular deworming.";
+      } else {
+        return "Young cow with good weight: Maintain protein-rich diet and growth monitoring.";
       }
-      return "Young cow with good weight: Maintain protein-rich diet and growth monitoring.";
     }
 
     // Productive age (2–10 years)
@@ -87,49 +73,23 @@ const CattleDashboard = () => {
       if (milk < 6) {
         return "Older cow with low yield: Natural decline. Ensure comfort, and soft bedding, avoid overwork.";
       }
-      return "Older cow still yielding well: Impressive! Maintain good care, but watch for joint stress.";
+      if (milk >= 6) {
+        return "Older cow still yielding well: Impressive! Maintain good care, but watch for joint stress.";
+      }
     }
 
     return "Condition not clearly defined. Please double-check the data.";
   };
 
-  const handleAddCow = async () => {
-    // Validate required fields with trimmed values
-    if (!newCow.name?.trim() || !newCow.breed?.trim() || !newCow.age?.trim()) {
-      alert("Please fill in all required fields (Name, Breed, Age)");
-      return;
-    }
-
-    try {
-      // Add new document to Firestore with validated data
-      await addDoc(collection(db, "cattle"), {
-        name: newCow.name.trim(),
-        breed: newCow.breed.trim(),
-        age: Math.max(0, Math.abs(Number(newCow.age))) || 0, // Ensure positive number
-        milk: Math.max(0, Math.abs(Number(newCow.milk))) || 0,
-        weight: Math.max(0, Math.abs(Number(newCow.weight))) || 0,
-      });
-
-      // Reset form state
-      setNewCow({
-        name: "",
-        breed: "",
-        age: "",
-        milk: "",
-        weight: "",
-      });
-    } catch (error) {
-      console.error("Firestore operation failed:", error);
-      alert("Failed to save cattle data. Please try again.");
-    }
+  const handleAddCow = () => {
+    if (!newCow.name || !newCow.breed || !newCow.age) return;
+    const updatedCattle = [...cattle, { id: Date.now(), ...newCow }];
+    setCattle(updatedCattle);
+    setNewCow({ name: "", breed: "", age: "", milk: 0, weight: 0 });
   };
 
-  const handleDeleteCow = async (id) => {
-    try {
-      await deleteDoc(doc(db, "cattle", id));
-    } catch (error) {
-      console.error("Error deleting document: ", error);
-    }
+  const handleDeleteCow = (id) => {
+    setCattle(cattle.filter((cow) => cow.id !== id));
   };
 
   const handleEditCow = (cow) => {
@@ -138,22 +98,13 @@ const CattleDashboard = () => {
     setShowEditModal(true);
   };
 
-  const handleUpdateCow = async () => {
-    try {
-      const { id, ...data } = editData;
-      await updateDoc(doc(db, "cattle", editingCow), {
-        ...data,
-        age: Number(data.age),
-        milk: Number(data.milk),
-        weight: Number(data.weight),
-      });
-      setShowEditModal(false);
-    } catch (error) {
-      console.error("Error updating document: ", error);
-    }
+  const handleUpdateCow = () => {
+    const updatedCattle = cattle.map((cow) =>
+      cow.id === editingCow ? { ...editData, id: editingCow } : cow
+    );
+    setCattle(updatedCattle);
+    setShowEditModal(false);
   };
-
-  // Animation variants
   const navbarVariants = {
     hidden: { opacity: 0, y: -50 },
     visible: {
@@ -162,20 +113,17 @@ const CattleDashboard = () => {
       transition: { duration: 0.5, ease: "easeInOut" },
     },
   };
-
   const buttonVariants = {
     hover: { scale: 1.1, transition: { duration: 0.2 } },
   };
 
   return (
     <motion.div
-      className="min-h-screen bg-white relative"
+      className="min-h-screen bg-white  relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Header and Navigation (keep your existing header code) */}
-      {/* ... (paste your entire header JSX here) */}
       <motion.header
         className="fixed w-full z-50 bg-white shadow-md"
         variants={navbarVariants}
@@ -296,18 +244,20 @@ const CattleDashboard = () => {
           </motion.div>
         )}
       </motion.header>
-
-      {/* Edit Modal Backdrop */}
       {showEditModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"></div>
       )}
-
-      <h1 className="text-5xl font-bold text-[#662929] text-center mb-6 pt-20">
+      <h1 className="text-5xl font-bold text-[#662929] text-center mb-6 ">
+      Navbar
+      </h1>
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"></div>
+      )}
+      <h1 className="text-5xl font-bold text-[#662929] text-center mb-6 ">
         🐄 Cattle Management
       </h1>
       <WeatherWidget />
 
-      {/* Main Table */}
       <motion.div
         className="bg-white shadow-2xl rounded-2xl p-6 max-w-6xl mx-auto"
         whileHover={{ scale: 1.02 }}
@@ -358,7 +308,6 @@ const CattleDashboard = () => {
         </table>
       </motion.div>
 
-      {/* Add Cattle Form */}
       <motion.div
         className="bg-white shadow-xl rounded-2xl p-6 max-w-6xl mx-auto mt-6"
         whileHover={{ scale: 1.02 }}
@@ -391,7 +340,6 @@ const CattleDashboard = () => {
         </button>
       </motion.div>
 
-      {/* Edit Modal */}
       {showEditModal && (
         <div className="fixed inset-0 flex justify-center items-center z-20">
           <motion.div
@@ -410,23 +358,21 @@ const CattleDashboard = () => {
               Edit Cattle
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              {Object.keys(editData || {})
-                .filter((key) => key !== "id")
-                .map((key) => (
-                  <div key={key}>
-                    <label className="block text-md font-medium text-gray-800">
-                      {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </label>
-                    <input
-                      type="text"
-                      className="border p-3 w-full rounded-lg shadow-sm focus:ring-2 focus:ring-[#662929]"
-                      value={editData[key]}
-                      onChange={(e) =>
-                        setEditData({ ...editData, [key]: e.target.value })
-                      }
-                    />
-                  </div>
-                ))}
+              {Object.keys(editData || {}).map((key) => (
+                <div key={key}>
+                  <label className="block text-md font-medium text-gray-800">
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </label>
+                  <input
+                    type="text"
+                    className="border p-3 w-full rounded-lg shadow-sm focus:ring-2 focus:ring-[#662929]"
+                    value={editData[key]}
+                    onChange={(e) =>
+                      setEditData({ ...editData, [key]: e.target.value })
+                    }
+                  />
+                </div>
+              ))}
             </div>
             <button
               className="bg-[#662929] text-white px-6 py-3 rounded-lg w-full mt-4 hover:bg-[rgb(102,41,41,0.8)] transition"

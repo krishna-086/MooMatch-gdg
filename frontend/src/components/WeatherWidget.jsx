@@ -13,19 +13,19 @@ const WeatherWidget = () => {
 
   return (
     <div
-      className="p-4  shadow-md text-center hover:bg-[rgb(168,85,85,0.2)] transition duration-300"
-      style={{ backgroundColor: 'rgb(168, 85, 85)' }}
+      className="p-4 text-center  transition duration-300"
     >
-      <h3 className="text-lg font-bold text-white">🌤️ Weather Update</h3>
+      <h3 className="text-lg font-bold text-[#662929]">🌤️ Weather Update</h3>
       {weather ? (
-        <p className="text-sm text-white">
+        <p className="text-sm text-[#662929]">
           Temperature: {weather.temperature}°C | Wind: {weather.windspeed} km/h
         </p>
       ) : (
-        <p className="text-white">Loading...</p>
+        <p className="text-[#662929]">Loading...</p>
       )}
     </div>
   );
 };
 
 export default WeatherWidget;
+

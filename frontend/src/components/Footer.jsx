@@ -13,8 +13,7 @@ const Footer = () => {
           <div className="flex flex-wrap justify-center gap-4 md:gap-8">
             <a href="#home" className="text-[#662929] hover:text-[#662929] hover:underline transition-colors">Home</a>
             <a href="#about" className="text-[#662929] hover:text-[#662929] hover:underline transition-colors">About</a>
-            <a href="#services" className="text-[#662929] hover:text-[#662929] hover:underline transition-colors">Services</a>
-            <a href="#testimonials" className="text-[#662929] hover:text-[#662929] hover:underline transition-colors">Testimonials</a>
+            <a href="#breed" className="text-[#662929] hover:text-[#662929] hover:underline transition-colors">Breed AI</a>
             <a href="#contact" className="text-[#662929] hover:text-[#662929] hover:underline transition-colors">Contact</a>
           </div>
         </div>

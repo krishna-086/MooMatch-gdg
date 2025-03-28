@@ -152,7 +152,7 @@ const ImageModel = () => {
   const breedInfo = highestPrediction ? BREED_INFO[highestPrediction.className] : '';
 
   return (
-    <section id="breed" className="mx-auto p-6 bg-white rounded-xl" data-aos="fade-up">
+    <section id="breed" className="mx-auto px-6 py-20 bg-white rounded-xl" data-aos="fade-up">
       <div className="mb-8 text-center">
         <h1 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2 text-[#662929]">
           <FiInfo className="text-[#662929]" />

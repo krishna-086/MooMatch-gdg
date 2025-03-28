@@ -5,12 +5,9 @@ import 'aos/dist/aos.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Services from './components/Services';
-import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
-import BottomNavbar from './components/BottomNavbar';
 import EduContent from './EduContent';
 import CattleDashboard from './CattleDashboard'; 
 
@@ -38,9 +35,7 @@ function App() {
               <Navbar />
               <Hero />
               <About />
-              <Services />
               <ImageModel />
-              <Testimonials />
               <Contact />
               <Footer />
             </>
@@ -54,8 +49,6 @@ function App() {
 
           
         </Routes>
-        
-        <BottomNavbar />
         <BackToTop />
         <Chatbot />
       </div>

@@ -46,16 +46,10 @@ const Navbar = () => {
               About
             </button>
             <button 
-              onClick={() => scrollToSection('services')} 
+              onClick={() => scrollToSection('breed')} 
               className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
             >
-              Services
-            </button>
-            <button 
-              onClick={() => scrollToSection('testimonials')} 
-              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
-            >
-              Testimonials
+              Breed AI
             </button>
             <button 
               onClick={() => scrollToSection('contact')} 
@@ -68,6 +62,12 @@ const Navbar = () => {
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
             >
               EduContent
+            </button>
+            <button 
+              onClick={() => navigate('/Dashboard')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              Dashboard
             </button>
           </div>
         </div>
@@ -109,16 +109,10 @@ const Navbar = () => {
               About
             </button>
             <button 
-              onClick={() => scrollToSection('services')} 
+              onClick={() => scrollToSection('breed')} 
               className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
             >
-              Services
-            </button>
-            <button 
-              onClick={() => scrollToSection('testimonials')} 
-              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
-            >
-              Testimonials
+              Breed AI
             </button>
             <button 
               onClick={() => scrollToSection('contact')} 
@@ -131,6 +125,12 @@ const Navbar = () => {
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
             >
               EduContent
+            </button>
+            <button 
+              onClick={() => navigate('/Dashboard')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              Dashboard
             </button>
           </div>
         </div>
