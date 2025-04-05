@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import EduContent from './EduContent';
 import CattleDashboard from './CattleDashboard'; 
+import Marketplace from './Marketplace';
 
 
 import ImageModel from './components/ImageModel';
@@ -46,6 +47,9 @@ function App() {
 
           {/* Cattle Management Dashboard Page */}
           <Route path="/dashboard" element={<CattleDashboard />} />
+
+          {/* Cattle Marketplace Page */}
+          <Route path="/marketplace" element={<Marketplace />} />
 
           
         </Routes>
