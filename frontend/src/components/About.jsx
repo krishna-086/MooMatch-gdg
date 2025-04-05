@@ -6,10 +6,11 @@ const About = () => {
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
         {/* Image */}
         <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-          <div 
-            className="h-64 md:h-96 w-full bg-cover bg-center rounded-lg shadow-xl"
-            style={{ backgroundImage: "url('/aboutcow.jpg')" }}
-          ></div>
+        <img
+    src="/aboutcow.jpg"
+    alt="About Us"
+    className="w-full h-64 md:h-96 object-cover rounded-lg shadow-xl"
+  />
         </div>
         
         {/* Content */}

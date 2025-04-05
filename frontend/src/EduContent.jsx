@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
 const EduContent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [startIndex, setStartIndex] = useState(0);
   const navigate = useNavigate();
-
   const cowBreeds = [
     {
       name: "Ongole",
@@ -67,15 +65,12 @@ const EduContent = () => {
       }
     }, 500);
   };
-
   const nextCards = () => {
     setStartIndex((prev) => (prev + 1) % cowBreeds.length);
   };
-
   const prevCards = () => {
     setStartIndex((prev) => (prev - 1 + cowBreeds.length) % cowBreeds.length);
   };
-
   const navbarVariants = {
     hidden: { opacity: 0, y: -50 },
     visible: {
@@ -84,7 +79,6 @@ const EduContent = () => {
       transition: { duration: 0.5, ease: "easeInOut" },
     },
   };
-
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -93,11 +87,9 @@ const EduContent = () => {
       transition: { duration: 0.7, ease: "easeInOut" },
     },
   };
-
   const buttonVariants = {
     hover: { scale: 1.1, transition: { duration: 0.2 } },
   };
-
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Navbar */}
@@ -107,7 +99,10 @@ const EduContent = () => {
         initial="hidden"
         animate="visible"
       >
-        <nav className="hidden md:flex container mx-auto px-4 py-4 flex justify-between items-center">
+        <nav
+          className="hidden md:flex container mx-auto px-4 py-4 flex justify-between items
+center"
+        >
           <motion.button
             onClick={() => navigate("/")}
             className="text-2xl font-bold text-[#662929]"
@@ -124,7 +119,8 @@ const EduContent = () => {
                     ? navigate("/")
                     : scrollToHomeSection(item.toLowerCase())
                 }
-                className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
+                className="text-[#662929] font-medium hover:underline hover:scale-110 transition
+transform duration-200"
                 variants={buttonVariants}
                 whileHover="hover"
               >
@@ -133,22 +129,26 @@ const EduContent = () => {
             ))}
             <button
               onClick={() => navigate("/eduContent")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+transition duration-200"
             >
               EduContent
             </button>
             {/* Dashboard Button */}
             <button
               onClick={() => navigate("/Dashboard")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+transition duration-200"
             >
               Dashboard
             </button>
           </div>
         </nav>
-
         {/* Mobile Navbar */}
-        <nav className="md:hidden bg-white shadow-md py-4 px-4 flex justify-between items-center">
+        <nav
+          className="md:hidden bg-white shadow-md py-4 px-4 flex justify-between items
+center"
+        >
           <motion.button
             onClick={() => navigate("/")}
             className="text-xl font-bold text-[#662929]"
@@ -187,89 +187,100 @@ const EduContent = () => {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {["Home", "About", "Services", "Testimonials", "Contact"].map(
-              (item, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    item === "Home"
-                      ? navigate("/")
-                      : scrollToHomeSection(item.toLowerCase());
-                  }}
-                  className="block text-[#662929] font-medium py-2 hover:underline hover:scale-110 transition-transform duration-200"
-                  variants={buttonVariants}
-                  whileHover="hover"
-                >
-                  {item}
-                </motion.button>
-              )
-            )}
-            <button
-              onClick={() => navigate("/eduContent")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
-            >
-              EduContent
-            </button>
-            {/* Dashboard Button */}
+            {["Home", "About", "Breed", "Contact"].map((item, index) => (
+              <motion.button
+                key={index}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  item === "Home"
+                    ? navigate("/")
+                    : scrollToHomeSection(item.toLowerCase());
+                }}
+                className="block text-[#662929] font-medium py-2 hover:underline hover:scale-110 
+transition-transform duration-200"
+                variants={buttonVariants}
+                whileHover="hover"
+              >
+                {item}
+              </motion.button>
+            ))}
             <button
               onClick={() => navigate("/Dashboard")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+transition duration-200 w-full mt-2"
             >
               Dashboard
+            </button>
+            <button
+              onClick={() => navigate("/eduContent")}
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+transition duration-200 w-full mt-2"
+            >
+              EduContent
             </button>
           </motion.div>
         )}
       </motion.header>
-
       {/* Cow Breeds Section */}
       <motion.section
-        className="bg-white shadow-lg rounded-xl p-8 mb-10 mt-24"
+        className="bg-white shadow-lg rounded-xl p-6 md:p-8 mb-10 mt-24 mx-4 md:mx-8"
         variants={sectionVariants}
         initial="hidden"
         animate="visible"
       >
-        <h2 className="text-3xl font-semibold text-[#662929] mb-6 text-center">
+        <h2 className="text-2xl md:text-3xl font-semibold text-[#662929] mb-6 text-center">
           Indian Cow Breeds
         </h2>
         <div className="relative flex items-center justify-center w-full">
           {/* Previous Button */}
           <motion.button
             onClick={prevCards}
-            className="absolute left-2 md:left-0 px-3 py-2 bg-[#662929] text-white rounded-md hover:bg-opacity-80 transition z-10"
+            className="absolute left-2 md:left-0 px-3 py-2 bg-[#662929] text-white rounded-md 
+hover:bg-opacity-80 transition z-10"
             variants={buttonVariants}
             whileHover="hover"
           >
             ❮
           </motion.button>
-
           {/* Carousel Cards */}
           <motion.div
             key={startIndex}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex space-x-4 w-full overflow-hidden justify-center"
+            className="flex space-x-4 w-full overflow-x-auto md:overflow-hidden justify-start 
+md:justify-center px-8 md:px-0"
           >
             {cowBreeds
-              .slice(startIndex, startIndex + (window.innerWidth < 640 ? 2 : 3))
+              .slice(
+                startIndex,
+                startIndex +
+                  (window.innerWidth < 768
+                    ? 1
+                    : window.innerWidth < 1024
+                    ? 2
+                    : 3)
+              )
               .map((breed, index) => (
                 <motion.div
                   key={index}
-                  className="w-full sm:w-1/2 md:w-1/3 bg-gray-100 p-4 md:p-6 rounded-xl shadow-md text-center flex flex-col items-center"
+                  className="w-64 md:w-72 lg:w-80 flex-shrink-0 bg-gray-100 p-4 md:p-6 rounded-xl 
+shadow-md text-center flex flex-col items-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   whileHover={{ scale: 1.03 }}
                 >
-                  <div className="w-full h-40 md:h-48 mb-4 overflow-hidden rounded-lg border-4 border-[#662929]">
+                  <div
+                    className="w-full h-40 md:h-48 mb-4 overflow-hidden rounded-lg border-4 
+border-[#662929]"
+                  >
                     <img
                       src={breed.image}
                       alt={breed.name}
                       className="object-cover w-full h-full"
                     />
                   </div>
-
                   <h3 className="text-xl md:text-2xl font-semibold text-[#662929]">
                     {breed.name}
                   </h3>
@@ -279,11 +290,11 @@ const EduContent = () => {
                 </motion.div>
               ))}
           </motion.div>
-
           {/* Next Button */}
           <motion.button
             onClick={nextCards}
-            className="absolute right-2 md:right-0 px-3 py-2 bg-[#662929] text-white rounded-md hover:bg-opacity-80 transition z-10"
+            className="absolute right-2 md:right-0 px-3 py-2 bg-[#662929] text-white rounded-md 
+hover:bg-opacity-80 transition z-10"
             variants={buttonVariants}
             whileHover="hover"
           >
@@ -291,22 +302,24 @@ const EduContent = () => {
           </motion.button>
         </div>
       </motion.section>
-      <div className="my-12 grid md:grid-cols-2 gap-6">
+      {/* Content Sections */}
+      <div className="my-12 grid md:grid-cols-2 gap-6 px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-[#dab3b3] rounded-2xl p-8 shadow-lg col-span-full hover:shadow-xl transition-shadow duration-300"
+          className="bg-[#dab3b3] rounded-2xl p-6 md:p-8 shadow-lg col-span-full 
+hover:shadow-xl transition-shadow duration-300"
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#662929] mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#662929] mb-4">
             Reviving the Legacy of Indian Cows
           </h2>
           <h3 className="text-xl md:text-2xl font-semibold text-[#662929] mb-4">
             Why is the Conservation of Indian Cows Important?
           </h3>
           <p className="mb-4 text-[#4b2c2c] leading-relaxed">
-            The Indian cow has been an integral part of the country’s
+            The Indian cow has been an integral part of the country's
             agricultural and cultural heritage for centuries. Indigenous breeds
             contribute significantly to sustainable agriculture, traditional
             medicine, and rural livelihoods. However, rapid urbanization and
@@ -321,22 +334,24 @@ const EduContent = () => {
           </p>
           <a
             href="https://ahd.maharashtra.gov.in/1035/Indian-Indigenous-Cattle"
-            className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200"
+            className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200"
             target="_blank"
             rel="noopener noreferrer"
           >
             Learn more about the importance of indigenous cattle
           </a>
         </motion.div>
-
+        {/* Other content sections remain the same with responsive padding */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 
+hover:shadow-xl transition-shadow duration-300"
         >
-          <h3 className="text-2xl md:text-3xl font-bold text-[#662929] mb-4">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#662929] mb-4">
             Raising Awareness
           </h3>
           <p className="mb-4 text-gray-700 leading-relaxed">
@@ -355,22 +370,23 @@ const EduContent = () => {
           </p>
           <a
             href="https://pib.gov.in/PressReleasePage.aspx?PRID=1742483"
-            className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200"
+            className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200"
             target="_blank"
             rel="noopener noreferrer"
           >
             Cow conservation and awareness programs
           </a>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 
+hover:shadow-xl transition-shadow duration-300"
         >
-          <h3 className="text-2xl md:text-3xl font-bold text-[#662929] mb-4">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#662929] mb-4">
             Enhancing Breeding Programs
           </h3>
           <p className="mb-4 text-gray-700 leading-relaxed">
@@ -389,7 +405,8 @@ const EduContent = () => {
           <div className="space-y-2">
             <a
               href="https://www.nrcb.res.in/"
-              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200 block"
+              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200 block"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -397,7 +414,8 @@ const EduContent = () => {
             </a>
             <a
               href="https://nbagr.icar.gov.in/"
-              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200 block"
+              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200 block"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -405,15 +423,15 @@ const EduContent = () => {
             </a>
           </div>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 col-span-full hover:shadow-xl transition-shadow duration-300"
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 col
+span-full hover:shadow-xl transition-shadow duration-300 col-span-full"
         >
-          <h3 className="text-2xl md:text-3xl font-bold text-[#662929] mb-4">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#662929] mb-4">
             Promoting the Socio-Economic and Environmental Benefits
           </h3>
           <p className="mb-4 text-gray-700 leading-relaxed">
@@ -441,7 +459,8 @@ const EduContent = () => {
           <div className="space-y-2">
             <a
               href="https://dahd.nic.in/schemes-programmes"
-              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200 block"
+              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200 block"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -449,7 +468,8 @@ const EduContent = () => {
             </a>
             <a
               href="https://icar.org.in/"
-              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200 block"
+              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200 block"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -457,7 +477,8 @@ const EduContent = () => {
             </a>
             <a
               href="https://mnre.gov.in/"
-              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200 block"
+              className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200 block"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -465,15 +486,15 @@ const EduContent = () => {
             </a>
           </div>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-[#dab3b3] rounded-2xl p-8 shadow-lg col-span-full hover:shadow-xl transition-shadow duration-300"
+          className="bg-[#dab3b3] rounded-2xl p-6 md:p-8 shadow-lg col-span-full 
+hover:shadow-xl transition-shadow duration-300"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[#662929] mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#662929] mb-4">
             How Can You Contribute?
           </h2>
           <p className="mb-4 text-[#3d2e2e] leading-relaxed">
@@ -494,7 +515,8 @@ const EduContent = () => {
           </p>
           <a
             href="https://kamdhenu.gov.in/"
-            className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition-colors duration-200"
+            className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
+colors duration-200"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -502,28 +524,30 @@ const EduContent = () => {
           </a>
         </motion.div>
       </div>
-
       {/* Dataset for Selected Indian Cow Breeds */}
       <motion.section
-        className="bg-white shadow-lg rounded-xl p-6 md:p-8 mt-8"
+        className="bg-white shadow-lg rounded-xl p-4 md:p-6 lg:p-8 mt-8 mx-4 md:mx-8"
         variants={sectionVariants}
         initial="hidden"
         animate="visible"
       >
-        <h2 className="text-2xl md:text-3xl font-semibold text-[#662929] mb-6 text-center">
+        <h2
+          className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#662929] mb-6 text
+center"
+        >
           Breed Compatibility Overview for selected Indian Cow Breeds
         </h2>
         <div className="overflow-x-auto">
           <table className="min-w-full border border-[#a75a5a] rounded-lg overflow-hidden">
             <thead className="bg-[#662929] text-white">
               <tr>
-                <th className="px-4 py-3 text-left">Breed</th>
-                <th className="px-4 py-3">MY</th>
-                <th className="px-4 py-3">CA</th>
-                <th className="px-4 py-3">F</th>
-                <th className="px-4 py-3">DR</th>
-                <th className="px-4 py-3">GR</th>
-                <th className="px-4 py-3">Avg. Score</th>
+                <th className="px-3 py-2 md:px-4 md:py-3 text-left">Breed</th>
+                <th className="px-3 py-2 md:px-4 md:py-3">MY</th>
+                <th className="px-3 py-2 md:px-4 md:py-3">CA</th>
+                <th className="px-3 py-2 md:px-4 md:py-3">F</th>
+                <th className="px-3 py-2 md:px-4 md:py-3">DR</th>
+                <th className="px-3 py-2 md:px-4 md:py-3">GR</th>
+                <th className="px-3 py-2 md:px-4 md:py-3">Avg. Score</th>
               </tr>
             </thead>
             <tbody className="text-[#662929]">
@@ -578,13 +602,25 @@ const EduContent = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                 >
-                  <td className="px-4 py-3 font-medium">{cow.breed}</td>
-                  <td className="px-4 py-3 text-center">{cow.MY}</td>
-                  <td className="px-4 py-3 text-center">{cow.CA}</td>
-                  <td className="px-4 py-3 text-center">{cow.F}</td>
-                  <td className="px-4 py-3 text-center">{cow.DR}</td>
-                  <td className="px-4 py-3 text-center">{cow.GR}</td>
-                  <td className="px-4 py-3 text-center font-semibold">
+                  <td className="px-3 py-2 md:px-4 md:py-3 font-medium">
+                    {cow.breed}
+                  </td>
+                  <td className="px-3 py-2 md:px-4 md:py-3 text-center">
+                    {cow.MY}
+                  </td>
+                  <td className="px-3 py-2 md:px-4 md:py-3 text-center">
+                    {cow.CA}
+                  </td>
+                  <td className="px-3 py-2 md:px-4 md:py-3 text-center">
+                    {cow.F}
+                  </td>
+                  <td className="px-3 py-2 md:px-4 md:py-3 text-center">
+                    {cow.DR}
+                  </td>
+                  <td className="px-3 py-2 md:px-4 md:py-3 text-center">
+                    {cow.GR}
+                  </td>
+                  <td className="px-3 py-2 md:px-4 md:py-3 text-center font-semibold">
                     {cow.avg}
                   </td>
                 </motion.tr>
@@ -593,7 +629,10 @@ const EduContent = () => {
           </table>
         </div>
       </motion.section>
-      <p className="mt-8 p-4 md:p-6 bg-[#f9f3f3] rounded-xl shadow text-[#662929] text-base md:text-lg text-center">
+      <p
+        className="mt-8 p-4 md:p-6 bg-[#f9f3f3] rounded-xl shadow text-[#662929] text-sm 
+md:text-base lg:text-lg text-center mx-4 md:mx-8"
+      >
         The compatibility score is calculated based on:{" "}
         <strong>Milk Yield (30%)</strong>,{" "}
         <strong>Climate Adaptability (20%)</strong>,{" "}
@@ -601,22 +640,26 @@ const EduContent = () => {
         <strong>Disease Resistance (15%)</strong>,{" "}
         <strong>Growth Rate (15%)</strong>.
       </p>
-
       {/* Footer */}
       <motion.footer
-        className="bg-white text-black py-12 mt-12"
+        className="bg-white text-black py-8 md:py-12 mt-12"
         variants={sectionVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+        <div
+          className="container mx-auto px-4 flex flex-col md:flex-row justify-between items
+center"
+        >
           <div className="mb-6 md:mb-0">
-            <h2 className="text-2xl font-bold text-[#662929] mb-2">MooMatch</h2>
-            <p className="text-sm text-[#662929]">
+            <h2 className="text-xl md:text-2xl font-bold text-[#662929] mb-2">
+              MooMatch
+            </h2>
+            <p className="text-xs md:text-sm text-[#662929]">
               Copyright © 2025 All rights reserved
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 lg:gap-8">
             {["Home", "About", "Breed", "Contact"].map((item, index) => (
               <motion.button
                 key={index}
@@ -625,7 +668,7 @@ const EduContent = () => {
                     ? navigate("/")
                     : scrollToHomeSection(item.toLowerCase())
                 }
-                className="text-[#662929] hover:underline transition-colors"
+                className="text-[#662929] hover:underline transition-colors text-sm md:text-base"
                 variants={buttonVariants}
                 whileHover="hover"
               >
@@ -638,5 +681,4 @@ const EduContent = () => {
     </div>
   );
 };
-
 export default EduContent;
