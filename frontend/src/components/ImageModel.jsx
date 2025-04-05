@@ -64,7 +64,7 @@ const ImageModel = () => {
   const [showCompatibility, setShowCompatibility] = useState(false);
   const [compatibleBreed, setCompatibleBreed] = useState(null);
   const imageContainerRef = useRef(null);
-  const URL = "https://teachablemachine.withgoogle.com/models/IboezDK--/";
+  const URL = "https://teachablemachine.withgoogle.com/models/93e46mcoU/";
 
   useEffect(() => {
     const loadModel = async () => {
@@ -134,6 +134,12 @@ const ImageModel = () => {
           const prediction = await model.predict(imgElement);
           const sortedPredictions = prediction.sort((a, b) => b.probability - a.probability);
           setPredictions(sortedPredictions);
+
+          if (sortedPredictions[0].className.toLowerCase() === 'object') {
+            setPredictions([]);
+            setError('The image doesn\'t appear to be a cow. Please upload a clear photo of an Indian cattle breed.');
+            return;
+          }
           
           if (sortedPredictions.length > 0) {
             const match = findCompatibleBreed(sortedPredictions[0].className);

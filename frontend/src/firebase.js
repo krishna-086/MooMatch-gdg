@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA6fsKq5VBBibh5mbvk2y5cgD8Q20D5XoA",
-  authDomain: "cattle-management-b7f9e.firebaseapp.com",
-  projectId: "cattle-management-b7f9e",
-  storageBucket: "cattle-management-b7f9e.firebasestorage.app",
-  messagingSenderId: "960759294363",
-  appId: "1:960759294363:web:63da55f190d91c4a13993e",
-  measurementId: "G-LM98WR92Z3"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 

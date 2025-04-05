@@ -89,7 +89,23 @@ Milk production varies by breed and care.
 India is the **largest milk producer** in the world!  
 The highest recorded **daily milk yield** by a single cow is **110 liters**! 🐄💧
 `;
-const API_KEY = "AIzaSyDx8mTGkrwXFbrDD8aFE2W3KHe1F2N6Cb4";
+
+const fetchAIResponse = async (prompt) => {
+  try {
+    const response = await fetch('http://localhost:3000/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        prompt: `${prompt}\n\nContext: ${businessInfo}` 
+      })
+    });
+    return await response.json();
+  } catch (err) {
+    console.error("API Error:", err);
+    return { error: "Failed to connect to backend" };
+  }
+};
+// const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -99,42 +115,68 @@ const Chatbot = () => {
   const chatEndRef = useRef(null);
 
   // Gemini AI Setup
-  const genAI = new GoogleGenerativeAI(API_KEY);
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
-    systemInstruction: businessInfo,
-  });
+  // const genAI = new GoogleGenerativeAI(API_KEY);
+  // const model = genAI.getGenerativeModel({
+  //   model: "gemini-1.5-pro",
+  //   systemInstruction: businessInfo,
+  // });
 
   // Auto-scroll to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // const handleSend = async () => {
+  //   if (!input.trim()) return;
+
+  //   const userMessage = input.trim();
+  //   setInput("");
+  //   setMessages((prev) => [...prev, { text: userMessage, isUser: true }]);
+
+  //   try {
+  //     setIsLoading(true);
+  //     const chat = model.startChat({ history: [] });
+  //     const result = await chat.sendMessageStream(userMessage);
+
+  //     let response = "";
+  //     for await (const chunk of result.stream) {
+  //       response += chunk.text();
+  //     }
+
+  //     setMessages((prev) => [...prev, { text: response, isUser: false }]);
+  //   } catch (error) {
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       {
+  //         text: "The message could not be sent. Please try again.",
+  //         isError: true,
+  //       },
+  //     ]);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   const handleSend = async () => {
     if (!input.trim()) return;
-
+  
     const userMessage = input.trim();
     setInput("");
     setMessages((prev) => [...prev, { text: userMessage, isUser: true }]);
-
+  
     try {
       setIsLoading(true);
-      const chat = model.startChat({ history: [] });
-      const result = await chat.sendMessageStream(userMessage);
-
-      let response = "";
-      for await (const chunk of result.stream) {
-        response += chunk.text();
-      }
-
-      setMessages((prev) => [...prev, { text: response, isUser: false }]);
+      const { response, error } = await fetchAIResponse(userMessage);
+      
+      if (error) throw new Error(error);
+      
+      setMessages((prev) => [
+        ...prev, 
+        { text: response || "No response from server", isUser: false }
+      ]);
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        {
-          text: "The message could not be sent. Please try again.",
-          isError: true,
-        },
+        { text: "The message could not be sent. Please try again.", isError: true }
       ]);
     } finally {
       setIsLoading(false);
