@@ -321,6 +321,12 @@ const Marketplace = () => {
             >
               Dashboard
             </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooHealth
+            </button>
             <button
               onClick={toggleCart}
               className="text-[#662929] text-xl relative ml-4"
@@ -388,7 +394,7 @@ const Marketplace = () => {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {["Home", "About", "Breed", "Contact"].map((item, index) => (
+            {["Home", "About", "Breed"].map((item, index) => (
               <motion.button
                 key={index}
                 onClick={() => {
@@ -421,6 +427,12 @@ const Marketplace = () => {
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200 w-full mt-2"
             >
               EduContent
+            </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200 w-full mt-2"
+            >
+              MooHealth
             </button>
           </motion.div>
         )}
