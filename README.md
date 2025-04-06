@@ -87,7 +87,7 @@ cd frontend
 npm install
 npm start
 ```
-### Backend (Include your own gemini api)
+### Backend (Include your own gemini api key)
 ```bash
 cd backend
 npm install 
