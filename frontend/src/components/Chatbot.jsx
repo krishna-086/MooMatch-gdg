@@ -89,10 +89,11 @@ Milk production varies by breed and care.
 India is the **largest milk producer** in the world!  
 The highest recorded **daily milk yield** by a single cow is **110 liters**! 🐄💧
 `;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const fetchAIResponse = async (prompt) => {
   try {
-    const response = await fetch('http://localhost:3000/api/chat', {
+    const response = await fetch(`${apiUrl}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
