@@ -56,6 +56,7 @@ const EduContent = () => {
     },
   ];
 
+
   const scrollToHomeSection = (sectionId) => {
     navigate("/");
     setTimeout(() => {
@@ -111,7 +112,7 @@ center"
             MooMatch
           </motion.button>
           <div className="flex space-x-8">
-            {["Home", "About", "Breed", "Contact"].map((item, index) => (
+            {["Home", "About", "Breed"].map((item, index) => (
               <motion.button
                 key={index}
                 onClick={() =>
@@ -129,7 +130,7 @@ transform duration-200"
             ))}
             <button
               onClick={() => navigate("/eduContent")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848]
 transition duration-200"
             >
               EduContent
@@ -137,10 +138,22 @@ transition duration-200"
             {/* Dashboard Button */}
             <button
               onClick={() => navigate("/Dashboard")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848]
 transition duration-200"
             >
               Dashboard
+            </button>
+            <button 
+              onClick={() => navigate('/marketplace')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooMarket
+            </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooHealth
             </button>
           </div>
         </nav>
@@ -178,6 +191,7 @@ center"
           </motion.button>
         </nav>
 
+
         {/* Mobile Menu */}
         {isMenuOpen && (
           <motion.div
@@ -187,7 +201,7 @@ center"
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {["Home", "About", "Breed", "Contact"].map((item, index) => (
+            {["Home", "About", "Breed"].map((item, index) => (
               <motion.button
                 key={index}
                 onClick={() => {
@@ -196,7 +210,7 @@ center"
                     ? navigate("/")
                     : scrollToHomeSection(item.toLowerCase());
                 }}
-                className="block text-[#662929] font-medium py-2 hover:underline hover:scale-110 
+                className="block text-[#662929] font-medium py-2 hover:underline hover:scale-110
 transition-transform duration-200"
                 variants={buttonVariants}
                 whileHover="hover"
@@ -206,17 +220,29 @@ transition-transform duration-200"
             ))}
             <button
               onClick={() => navigate("/Dashboard")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848]
 transition duration-200 w-full mt-2"
             >
               Dashboard
             </button>
             <button
               onClick={() => navigate("/eduContent")}
-              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848]
 transition duration-200 w-full mt-2"
             >
               EduContent
+            </button>
+            <button 
+              onClick={() => navigate('/marketplace')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200 w-full mt-2"
+            >
+              MooMarket
+            </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200 w-full mt-2"
+            >
+              MooHealth
             </button>
           </motion.div>
         )}
@@ -235,7 +261,7 @@ transition duration-200 w-full mt-2"
           {/* Previous Button */}
           <motion.button
             onClick={prevCards}
-            className="absolute left-2 md:left-0 px-3 py-2 bg-[#662929] text-white rounded-md 
+            className="absolute left-2 md:left-0 px-3 py-2 bg-[#662929] text-white rounded-md
 hover:bg-opacity-80 transition z-10"
             variants={buttonVariants}
             whileHover="hover"
@@ -248,7 +274,7 @@ hover:bg-opacity-80 transition z-10"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex space-x-4 w-full overflow-x-auto md:overflow-hidden justify-start 
+            className="flex space-x-4 w-full overflow-x-auto md:overflow-hidden justify-start
 md:justify-center px-8 md:px-0"
           >
             {cowBreeds
@@ -264,7 +290,7 @@ md:justify-center px-8 md:px-0"
               .map((breed, index) => (
                 <motion.div
                   key={index}
-                  className="w-64 md:w-72 lg:w-80 flex-shrink-0 bg-gray-100 p-4 md:p-6 rounded-xl 
+                  className="w-64 md:w-72 lg:w-80 flex-shrink-0 bg-gray-100 p-4 md:p-6 rounded-xl
 shadow-md text-center flex flex-col items-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -272,7 +298,7 @@ shadow-md text-center flex flex-col items-center"
                   whileHover={{ scale: 1.03 }}
                 >
                   <div
-                    className="w-full h-40 md:h-48 mb-4 overflow-hidden rounded-lg border-4 
+                    className="w-full h-40 md:h-48 mb-4 overflow-hidden rounded-lg border-4
 border-[#662929]"
                   >
                     <img
@@ -293,7 +319,7 @@ border-[#662929]"
           {/* Next Button */}
           <motion.button
             onClick={nextCards}
-            className="absolute right-2 md:right-0 px-3 py-2 bg-[#662929] text-white rounded-md 
+            className="absolute right-2 md:right-0 px-3 py-2 bg-[#662929] text-white rounded-md
 hover:bg-opacity-80 transition z-10"
             variants={buttonVariants}
             whileHover="hover"
@@ -309,7 +335,7 @@ hover:bg-opacity-80 transition z-10"
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-[#dab3b3] rounded-2xl p-6 md:p-8 shadow-lg col-span-full 
+          className="bg-[#dab3b3] rounded-2xl p-6 md:p-8 shadow-lg col-span-full
 hover:shadow-xl transition-shadow duration-300"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#662929] mb-4">
@@ -333,7 +359,7 @@ hover:shadow-xl transition-shadow duration-300"
             more sustainable future.
           </p>
           <a
-            href="https://ahd.maharashtra.gov.in/1035/Indian-Indigenous-Cattle"
+            href="https://dahd.maharashtra.gov.in/en/"
             className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200"
             target="_blank"
@@ -348,7 +374,7 @@ colors duration-200"
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200
 hover:shadow-xl transition-shadow duration-300"
         >
           <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#662929] mb-4">
@@ -369,7 +395,7 @@ hover:shadow-xl transition-shadow duration-300"
             encourage wider adoption.
           </p>
           <a
-            href="https://pib.gov.in/PressReleasePage.aspx?PRID=1742483"
+            href="https://www.india.gov.in/information-schemes-department-animal-husbandry-dairying-and-fisheries"
             className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200"
             target="_blank"
@@ -383,7 +409,7 @@ colors duration-200"
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200
 hover:shadow-xl transition-shadow duration-300"
         >
           <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#662929] mb-4">
@@ -404,7 +430,7 @@ hover:shadow-xl transition-shadow duration-300"
           </p>
           <div className="space-y-2">
             <a
-              href="https://www.nrcb.res.in/"
+              href="https://www.djjs.org/kamdhenu/initiatives/kamdhenu-care"
               className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200 block"
               target="_blank"
@@ -413,7 +439,7 @@ colors duration-200 block"
               National Kamdhenu Breeding Program
             </a>
             <a
-              href="https://nbagr.icar.gov.in/"
+              href="https://agriculture.vikaspedia.in/viewcontent/agriculture/livestock/cattle-buffalo/breeding-management-1/importance-of-artificial-insemination-in-dairy-farming?lgn=en"
               className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200 block"
               target="_blank"
@@ -458,7 +484,7 @@ span-full hover:shadow-xl transition-shadow duration-300 col-span-full"
           </p>
           <div className="space-y-2">
             <a
-              href="https://dahd.nic.in/schemes-programmes"
+              href="https://dahd.gov.in/schemes-programmes"
               className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200 block"
               target="_blank"
@@ -467,7 +493,7 @@ colors duration-200 block"
               Government schemes for indigenous cow breeders
             </a>
             <a
-              href="https://icar.org.in/"
+              href="https://dahd.gov.in/schemes-programmes"
               className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200 block"
               target="_blank"
@@ -476,7 +502,7 @@ colors duration-200 block"
               Role of cows in sustainable agriculture
             </a>
             <a
-              href="https://mnre.gov.in/"
+              href="https://krishnadhamgaushala.org/cow-values-and-importance-in-india/"
               className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200 block"
               target="_blank"
@@ -491,7 +517,7 @@ colors duration-200 block"
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-[#dab3b3] rounded-2xl p-6 md:p-8 shadow-lg col-span-full 
+          className="bg-[#dab3b3] rounded-2xl p-6 md:p-8 shadow-lg col-span-full
 hover:shadow-xl transition-shadow duration-300"
         >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#662929] mb-4">
@@ -514,7 +540,7 @@ hover:shadow-xl transition-shadow duration-300"
             agriculture and rural development.
           </p>
           <a
-            href="https://kamdhenu.gov.in/"
+            href="https://www.djjs.org/kamdhenu"
             className="text-[#662929] underline font-semibold hover:text-[#4d1f1f] transition
 colors duration-200"
             target="_blank"
@@ -630,7 +656,7 @@ center"
         </div>
       </motion.section>
       <p
-        className="mt-8 p-4 md:p-6 bg-[#f9f3f3] rounded-xl shadow text-[#662929] text-sm 
+        className="mt-8 p-4 md:p-6 bg-[#f9f3f3] rounded-xl shadow text-[#662929] text-sm
 md:text-base lg:text-lg text-center mx-4 md:mx-8"
       >
         The compatibility score is calculated based on:{" "}
@@ -682,3 +708,6 @@ center"
   );
 };
 export default EduContent;
+
+
+

@@ -197,7 +197,7 @@ const CattleDashboard = () => {
             MooMatch
           </motion.button>
           <div className="flex space-x-8">
-            {["Home", "About", "Breed", "Contact"].map((item, index) => (
+            {["Home", "About", "Breed"].map((item, index) => (
               <motion.button
                 key={index}
                 onClick={() =>
@@ -224,6 +224,18 @@ const CattleDashboard = () => {
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
             >
               Dashboard
+            </button>
+            <button 
+              onClick={() => navigate('/marketplace')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooMarket
+            </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooHealth
             </button>
           </div>
         </nav>
@@ -268,7 +280,7 @@ const CattleDashboard = () => {
     exit={{ opacity: 0, y: -10 }}
     transition={{ duration: 0.3 }}
   >
-    {["Home", "About", "Breed", "Contact"].map(
+    {["Home", "About", "Breed"].map(
       (item, index) => (
         <motion.button
           key={index}
@@ -300,6 +312,18 @@ const CattleDashboard = () => {
     >
       EduContent
     </button>
+    <button 
+              onClick={() => navigate('/marketplace')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200 w-full mt-2"
+            >
+              MooMarket
+            </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200 w-full mt-2"
+            >
+              MooHealth
+            </button>
   </motion.div>
 )}
         

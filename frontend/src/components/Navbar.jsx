@@ -52,12 +52,6 @@ const Navbar = () => {
               Breed AI
             </button>
             <button 
-              onClick={() => scrollToSection('contact')} 
-              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200"
-            >
-              Contact
-            </button>
-            <button 
               onClick={() => navigate('/eduContent')} 
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
             >
@@ -68,6 +62,18 @@ const Navbar = () => {
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
             >
               Dashboard
+            </button>
+            <button 
+              onClick={() => navigate('/marketplace')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooMarket
+            </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooHealth
             </button>
           </div>
         </div>
@@ -115,12 +121,6 @@ const Navbar = () => {
               Breed AI
             </button>
             <button 
-              onClick={() => scrollToSection('contact')} 
-              className="text-[#662929] font-medium hover:underline hover:scale-110 transition-transform duration-200 text-left"
-            >
-              Contact
-            </button>
-            <button 
               onClick={() => navigate('/EduContent')} 
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
             >
@@ -131,6 +131,18 @@ const Navbar = () => {
               className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
             >
               Dashboard
+            </button>
+            <button 
+              onClick={() => navigate('/marketplace')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooMarket
+            </button>
+            <button 
+              onClick={() => navigate('/diseasepredictor')} 
+              className="bg-[#662929] text-white px-4 py-2 rounded-md hover:bg-[#884848] transition duration-200"
+            >
+              MooHealth
             </button>
           </div>
         </div>
