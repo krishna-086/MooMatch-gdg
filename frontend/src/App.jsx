@@ -11,10 +11,9 @@ import BackToTop from './components/BackToTop';
 import EduContent from './EduContent';
 import CattleDashboard from './CattleDashboard'; 
 import Marketplace from './Marketplace';
-
-
 import ImageModel from './components/ImageModel';
 import Chatbot from './components/Chatbot';
+import CowDiseasePredictor from './CowDiseasePredictor';
 
 function App() {
   useEffect(() => {
@@ -50,6 +49,9 @@ function App() {
 
           {/* Cattle Marketplace Page */}
           <Route path="/marketplace" element={<Marketplace />} />
+          
+          {/* Disease Predictor Page */}
+          <Route path="/diseasepredictor" element={<CowDiseasePredictor />} />
 
           
         </Routes>
