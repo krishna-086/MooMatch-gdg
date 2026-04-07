@@ -4,7 +4,7 @@
 
 > Reviving the Indian Cow Breed for a Sustainable Future
 
-## 🌱 Overview
+## 🌱 Overview:
 
 MooMatch is a comprehensive **AI-powered platform** designed to conserve indigenous Indian cow breeds and empower small and marginal farmers with smart tools. From in-browser **breed identification** to **disease prediction**, multilingual chatbot, and an integrated **marketplace**, MooMatch is the one-stop digital companion for cattle care and management.
 
