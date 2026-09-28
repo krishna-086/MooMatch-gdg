@@ -4,7 +4,7 @@ import joblib
 import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from sklearn.model_selection import RandomizedSearchCV, StratifiedKFold
+from sklearn.model_selection import RandomizedSearchCV, StratifiedKFold, train_test_split
 from sklearn.feature_selection import VarianceThreshold
 from imblearn.over_sampling import SMOTE
 import matplotlib.pyplot as plt
@@ -12,12 +12,21 @@ import seaborn as sns
 
 os.environ['OMP_NUM_THREADS'] = '2'
 train_df = pd.read_csv("train.csv")
-test_df = pd.read_csv("test.csv")
 
-X_train = train_df.drop(columns=["prognosis"])
-y_train = train_df["prognosis"]
-X_test = test_df.drop(columns=["prognosis"])
-y_test = test_df["prognosis"]
+# Use a separate test.csv when it is available; otherwise hold out 20% of train.csv.
+if os.path.exists("test.csv"):
+    test_df = pd.read_csv("test.csv")
+    X_train = train_df.drop(columns=["prognosis"])
+    y_train = train_df["prognosis"]
+    X_test = test_df.drop(columns=["prognosis"])
+    y_test = test_df["prognosis"]
+else:
+    print("test.csv not found - holding out 20% of train.csv for evaluation.")
+    X = train_df.drop(columns=["prognosis"])
+    y = train_df["prognosis"]
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
 
 vt = VarianceThreshold(threshold=0.01)
 X_train = vt.fit_transform(X_train)

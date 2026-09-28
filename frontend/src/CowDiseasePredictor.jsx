@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+// Base URL of the Flask disease-prediction API.
+// Override with VITE_ML_API_URL in .env to point at a local server.
+const ML_API_URL =
+  import.meta.env.VITE_ML_API_URL ||
+  'https://cow-disease-api-18018835632.us-central1.run.app';
+
 // Navbar animation variants
 const navbarVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -531,7 +537,7 @@ const CowDiseasePredictor = () => {
     setPredictionResult('');
 
     try {
-      const response = await fetch("https://cow-disease-api-18018835632.us-central1.run.app/predict", {
+      const response = await fetch(`${ML_API_URL}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ symptoms: selectedSymptoms })

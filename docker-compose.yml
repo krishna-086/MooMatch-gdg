@@ -1,0 +1,32 @@
+# Runs the two backend services locally.
+# The frontend is not containerised - run it with `npm run dev` in ./frontend.
+#
+#   cp backend/.env.example backend/.env    # then fill in GEMINI_API_KEY
+#   docker compose up --build
+#
+# Chat API -> http://localhost:3000
+# ML API   -> http://localhost:5000
+#
+# The defaults in frontend/.env already point at both of these.
+
+services:
+  ml-backend:
+    build:
+      context: ./ml-backend
+    # The image trains the model during build, so the first build is slow.
+    ports:
+      - "5000:8080"
+    environment:
+      PORT: 8080
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    # Reads GEMINI_API_KEY (and optionally PORT, CORS_ORIGINS) from backend/.env,
+    # the same file `npm run dev` uses, so there is only one place to set it.
+    env_file:
+      - ./backend/.env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

@@ -5,10 +5,14 @@ const cors = require('cors');
 
 const app = express();
 
-// Allow requests from your frontend (localhost + production)
-app.use(cors({
-  origin: ['http://localhost:5173', 'https://moomatch.netlify.app']
-}));
+// Allow requests from your frontend (localhost + production).
+// Override with CORS_ORIGINS in .env as a comma-separated list.
+const defaultOrigins = ['http://localhost:5173', 'https://moomatch.netlify.app'];
+const allowedOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',').map((o) => o.trim()).filter(Boolean)
+  : defaultOrigins;
+
+app.use(cors({ origin: allowedOrigins }));
 
 app.use(express.json());
 

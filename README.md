@@ -118,11 +118,15 @@ apps: a React frontend, a small Node.js chat service, and a Python machine learn
 ```
 MooMatch-gdg/
 ├── README.md
+├── LICENSE                         # MIT license text
+├── docker-compose.yml              # Runs both backend services together
+├── .gitignore
 │
-├── frontend/                       # React + Vite single-page app
+├── frontend/                       # React + Vite single-page app (not containerised)
 │   ├── index.html                  # HTML entry point
 │   ├── vite.config.js              # Vite config (React + Tailwind plugins)
 │   ├── eslint.config.js            # ESLint flat config
+│   ├── .env.example                # Template for the VITE_* variables
 │   ├── package.json
 │   ├── public/                     # Breed photos, product images, icons
 │   └── src/
@@ -147,11 +151,15 @@ MooMatch-gdg/
 │
 ├── backend/                        # Node.js chat service
 │   ├── server.js                   # Express app, POST /api/chat
+│   ├── .env.example                # Template for GEMINI_API_KEY etc.
+│   ├── Dockerfile
 │   └── package.json
 │
 └── ml-backend/                     # Python disease prediction service
     ├── app.py                      # Flask app, POST /predict
     ├── model.py                    # Training script, writes cow_disease_model.pkl
+    ├── requirements.txt            # Python dependencies
+    ├── Dockerfile                  # Trains the model, then serves with gunicorn
     └── train.csv                   # 2043 rows, 93 symptoms, 26 diseases
 ```
 
@@ -179,21 +187,29 @@ cd backend
 npm install
 ```
 
-Create `backend/.env`:
+Create `backend/.env` from the template:
+
+```bash
+cp .env.example .env
+```
 
 | Variable | Purpose |
 |---|---|
 | `GEMINI_API_KEY` | Google Gemini API key used to generate chat replies |
 | `PORT` | Port for the Express server (optional, defaults to `3000`) |
+| `CORS_ORIGINS` | Comma-separated list of allowed frontend origins (optional) |
 
 ```bash
 npm run dev     # development, auto-reloads on change
 npm start       # production
 ```
 
-The server allows requests from `http://localhost:5173` and `https://moomatch.netlify.app`.
-If you run the frontend on a different port, add that origin to the `cors` list in
-`backend/server.js`.
+By default the server accepts requests from `http://localhost:5173` and
+`https://moomatch.netlify.app`. To allow a different origin, set `CORS_ORIGINS`:
+
+```bash
+CORS_ORIGINS=http://localhost:4173,https://your-domain.example
+```
 
 ### 3. Frontend
 
@@ -202,11 +218,19 @@ cd frontend
 npm install
 ```
 
-Create `frontend/.env`. All variables must start with `VITE_` for Vite to expose them:
+Create `frontend/.env` from the template:
+
+```bash
+cp .env.example .env
+```
+
+All variables must start with `VITE_` for Vite to expose them to the app. Restart the
+dev server after changing any of them:
 
 | Variable | Purpose |
 |---|---|
 | `VITE_API_URL` | Base URL of the chat backend, e.g. `http://localhost:3000` |
+| `VITE_ML_API_URL` | Base URL of the disease prediction API (optional, falls back to the deployed Cloud Run service) |
 | `VITE_FIREBASE_API_KEY` | Firebase web API key |
 | `VITE_FIREBASE_AUTH_DOMAIN` | Firebase auth domain |
 | `VITE_FIREBASE_PROJECT_ID` | Firebase project ID |
@@ -224,15 +248,13 @@ npm run lint      # run ESLint
 
 ### 4. ML backend
 
-<!-- TODO: ml-backend/requirements.txt does not exist in this repository. Generate one
-     (pip freeze > requirements.txt) so the install step below can be a single command. -->
-
-Install the dependencies used by `app.py` and `model.py`:
-
 ```bash
 cd ml-backend
-pip install flask flask-cors joblib pandas numpy scikit-learn imbalanced-learn matplotlib seaborn
+pip install -r requirements.txt
 ```
+
+`requirements.txt` uses minimum versions rather than exact pins. After a successful
+install, run `pip freeze > requirements.txt` if you want a fully reproducible set.
 
 Train the model. This writes `cow_disease_model.pkl` next to the script:
 
@@ -240,9 +262,9 @@ Train the model. This writes `cow_disease_model.pkl` next to the script:
 python model.py
 ```
 
-<!-- TODO: model.py reads both train.csv and test.csv, but only train.csv is committed.
-     Add test.csv, or change model.py to split train.csv with train_test_split. Training
-     will fail with FileNotFoundError until this is resolved. -->
+If a `test.csv` is present it is used for evaluation; otherwise the script holds out
+20% of `train.csv` (stratified, `random_state=42`). Only `train.csv` is committed, so
+by default you get the held-out split.
 
 Run the API:
 
@@ -260,14 +282,72 @@ development server:
 gunicorn --bind 0.0.0.0:8080 app:app
 ```
 
-### 5. Point the frontend at your local ML backend (optional)
+### 5. Switching between the local and deployed ML backend
 
-The disease prediction URL is currently hardcoded in `frontend/src/CowDiseasePredictor.jsx`
-and points at the deployed Cloud Run service. To test against a local Flask server, change
-that `fetch` URL to `http://127.0.0.1:5000/predict`.
+`frontend/.env.example` sets `VITE_ML_API_URL=http://localhost:5000`, so a local Flask
+server is used by default. Comment that line out to fall back to the deployed Cloud Run
+service instead:
 
-<!-- TODO: move this hardcoded URL into an environment variable (e.g. VITE_ML_API_URL)
-     so it does not need a code edit to switch environments. -->
+```bash
+# VITE_ML_API_URL=http://localhost:5000
+```
+
+Restart the dev server after changing it — Vite only reads `.env` at startup.
+
+---
+
+## 🐳 Running with Docker
+
+The two backend services are containerised. The frontend is not — run it with
+`npm run dev`, which gives you hot reload and is simpler than rebuilding a static image.
+
+### Both backends at once
+
+```bash
+cp backend/.env.example backend/.env    # then fill in GEMINI_API_KEY
+docker compose up --build
+```
+
+| Service | URL |
+|---|---|
+| Chat API | http://localhost:3000 |
+| Disease API | http://localhost:5000 |
+
+Compose reads `backend/.env`, the same file `npm run dev` uses, so the Gemini key only
+has to be set in one place.
+
+The first build is slow: the `ml-backend` image trains the Random Forest as a build step,
+so the finished image already contains `cow_disease_model.pkl`. Later builds reuse the
+cached layer unless `model.py`, `train.csv`, or `requirements.txt` changes.
+
+Then start the frontend against them:
+
+```bash
+cd frontend
+npm run dev     # http://localhost:5173
+```
+
+The defaults in `frontend/.env` already point at both containers.
+
+### Individual images
+
+```bash
+# Disease API — trains the model, then serves it with gunicorn
+docker build -t moomatch-ml ./ml-backend
+docker run -p 5000:8080 moomatch-ml
+
+# Chat API
+docker build -t moomatch-backend ./backend
+docker run -p 3000:3000 --env-file backend/.env moomatch-backend
+```
+
+Useful extras:
+
+```bash
+docker compose logs -f backend    # follow one service's logs
+docker compose down               # stop and remove the containers
+docker compose up --build ml-backend   # rebuild just one service
+```
 
 ---
 
@@ -351,8 +431,20 @@ will still return a prediction. Treat the output as guidance, not a veterinary d
 - **Repository**: [github.com/krishna-086/MooMatch-gdg](https://github.com/krishna-086/MooMatch-gdg)
 - **Demo Video**: [Watch on YouTube](https://youtu.be/BiujpOA5ulU?si=q1KrJl57U2D49_Da)
 
-<!-- TODO: no Dockerfile, docker-compose.yml, or CI workflow exists in this repository.
-     Document the Cloud Run deploy steps once they are scripted. -->
+### Deploying the disease API to Cloud Run
+
+The `ml-backend` image reads the `PORT` variable that Cloud Run injects, so it can be
+deployed straight from source:
+
+```bash
+gcloud run deploy cow-disease-api \
+  --source ./ml-backend \
+  --region us-central1 \
+  --allow-unauthenticated
+```
+
+<!-- TODO: no CI workflow exists in this repository. Add one to build the images and
+     deploy on push to main, if that is wanted. -->
 
 ---
 
@@ -381,5 +473,10 @@ will still return a prediction. Treat the output as guidance, not a veterinary d
 
 ## 📄 License
 
-<!-- TODO: backend/package.json declares "ISC", but there is no LICENSE file in the
-     repository. Add one, or confirm the intended license for the whole project. -->
+Released under the **MIT License**. See [LICENSE](LICENSE) for the full text.
+
+Copyright (c) 2025-2026 Krishna Anand.
+
+You are free to use, copy, modify and distribute this project, including for commercial
+purposes, as long as the copyright notice and license text are kept in any copy you
+distribute. The software comes with no warranty.
