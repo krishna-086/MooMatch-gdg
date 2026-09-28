@@ -1,6 +1,5 @@
 # 🐄 MooMatch — Empowering Farmers Through AI for Cow Conservation
 
-**A Solution Challenge Submission by Team TensorZ**
 
 > Reviving the Indian Cow Breed for a Sustainable Future
 
@@ -409,19 +408,6 @@ will still return a prediction. Treat the output as guidance, not a veterinary d
 
 ---
 
-## ⚠️ Known Limitations
-
-- The **contact form** on the home page has no submit handler. It renders but does not send
-  anything.
-- The **marketplace cart** is local React state only. There is no checkout, payment, or order
-  collection, and the cart is lost on page refresh.
-- The **chatbot UI is in English**. Gemini can reply in other languages if asked directly, but
-  there is no language selector or translation layer.
-- The **weather widget** is fixed to Delhi coordinates (28.7041, 77.1025) and does not use the
-  user's location.
-- There are **no automated tests** in any of the three apps.
-
----
 
 ## 🌐 Deployment
 
